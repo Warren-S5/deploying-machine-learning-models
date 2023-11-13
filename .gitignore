@@ -121,6 +121,7 @@ sample_submission.csv
 test_data_predictions.csv
 v2-plant-seedlings-dataset/
 v2-plant-seedlings-dataset.zip
+*.csv
 
 # all logs
 logs/
