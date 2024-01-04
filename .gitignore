@@ -24,6 +24,9 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+Pipfile
+Pipfile.lock
+
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -134,6 +137,7 @@ packages/neural_network_model/neural_network_model/trained_models/*.h5
 *.h5
 packages/neural_network_model/neural_network_model/datasets/training_data_reference.txt
 *.pkl
+*.joblib
 
 .DS_Store
 
