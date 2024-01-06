@@ -9,12 +9,53 @@ from regression_model import __version__ as _version
 from regression_model.config.core import DATASET_DIR, TRAINED_MODEL_DIR, config
 
 
-def load_dataset(*, file_name: str) -> pd.DataFrame:
-    dataframe = pd.read_csv(Path(f"{DATASET_DIR}/{file_name}"))
-    dataframe["MSSubClass"] = dataframe["MSSubClass"].astype("O")
+# float type for np.nan
+def get_first_cabin(row: Any) -> Union[str, float]:
+    """Extracts the first assigned value for cabin variable"""
+    try:
+        return row.split()[0]
+    except AttributeError:
+        return np.nan
 
-    # rename variables beginning with numbers to avoid syntax errors later
-    transformed = dataframe.rename(columns=config.model_config.variables_to_rename)
+def get_title(row: str) -> str:
+    """Extracts the title (Mr, Ms, etc) from the name variable"""
+    line = row
+    if re.search('Mrs', line):
+        return 'Mrs'
+    elif re.search('Mr', line):
+        return 'Mr'
+    elif re.search('Miss', line):
+        return 'Miss'
+    elif re.search('Master', line):
+        return 'Master'
+    else:
+        return 'Other'
+
+def preprocessing(data: pd.DataFrame) -> pd.DataFrame:
+    """ Preprocessing steps for data """
+
+    data = data.replace('?', np.nan)
+    data['cabin'] = data['cabin'].apply(get_first_cabin)
+    data['title'] = data['name'].apply(get_title)
+    data['fare'] = data['fare'].astype('float')
+    data['age'] = data['age'].astype('float')
+
+    data.drop(labels=config.model_config.dropped_vars, axis=1, inplace=True)
+
+    return data
+
+def load_raw_data(*, data_path: str) -> pd.DataFrame:
+    """Loads data from URL"""
+    dataframe = pd.read_csv(Path(data_path))
+    transformed = preprocessing(preprocessing)
+
+    return transformed
+
+def load_dataset(*, file_name: str) -> pd.DataFrame:
+    """ Loads data in data directory"""
+    dataframe = pd.read_csv(Path(f"{DATASET_DIR}/{file_name}"))
+    transformed = preprocessing(preprocessing)
+
     return transformed
 
 
