@@ -2,6 +2,7 @@
 package_name: classification_model
 
 # Data Files
+raw_data_path: https://www.openml.org/data/get_csv/16826755/phpMYEkMl
 training_data_file: train.csv
 test_data_file: test.csv
 
@@ -27,7 +28,7 @@ features:
 test_size: 0.2
 
 # to set the random seed
-random_state: 08
+random_state: 8
 
 regularization_param: 0.0005
 
