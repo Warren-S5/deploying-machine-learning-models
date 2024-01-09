@@ -25,7 +25,7 @@ features:
   - title
  
 # set train/test split
-test_size: 0.2
+test_size: 0.2s
 
 # to set the random seed
 random_state: 8
@@ -51,5 +51,5 @@ categorical_vars:
   - embarked
   - title
 
-cabin_vars:
+c:
   - cabin

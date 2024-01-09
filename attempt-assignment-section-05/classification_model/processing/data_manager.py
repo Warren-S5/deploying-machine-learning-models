@@ -5,8 +5,8 @@ import joblib
 import pandas as pd
 from sklearn.pipeline import Pipeline
 
-from regression_model import __version__ as _version
-from regression_model.config.core import DATASET_DIR, TRAINED_MODEL_DIR, config
+from classification_model import __version__ as _version
+from classification_mode.config.core import DATASET_DIR, TRAINED_MODEL_DIR, config
 
 
 # float type for np.nan
@@ -31,7 +31,7 @@ def get_title(row: str) -> str:
     else:
         return 'Other'
 
-def preprocessing(data: pd.DataFrame) -> pd.DataFrame:
+def pre_processing(data: pd.DataFrame) -> pd.DataFrame:
     """ Preprocessing steps for data """
 
     data = data.replace('?', np.nan)
@@ -47,14 +47,14 @@ def preprocessing(data: pd.DataFrame) -> pd.DataFrame:
 def load_raw_data(*, data_path: str) -> pd.DataFrame:
     """Loads data from URL"""
     dataframe = pd.read_csv(Path(data_path))
-    transformed = preprocessing(preprocessing)
+    transformed = pre_processing(dataframe)
 
     return transformed
 
 def load_dataset(*, file_name: str) -> pd.DataFrame:
     """ Loads data in data directory"""
     dataframe = pd.read_csv(Path(f"{DATASET_DIR}/{file_name}"))
-    transformed = preprocessing(preprocessing)
+    transformed = pre_processing(dataframe)
 
     return transformed
 
